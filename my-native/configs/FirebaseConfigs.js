@@ -2,6 +2,7 @@
 import { initializeApp } from 'firebase/app'
 // import { getAnalytics } from 'firebase/analytics'
 import firebase from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
 import 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,12 +17,6 @@ const firebaseConfig = {
   messagingSenderId: '1039872644941',
   appId: '1:1039872644941:web:c89629f6a8e8cae7bac904',
   measurementId: 'G-JYDM830P7N',
-}
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
-} else {
-  firebase.app() // use the already initialized instance
 }
 
 // Initialize Firebase
