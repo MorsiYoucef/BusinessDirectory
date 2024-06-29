@@ -6,7 +6,12 @@ import { Colors } from '../../constants/Colors'
 
 const TabLayout = () => {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: Colors.PRIMARY }}>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors.PRIMARY,
+        headerShown: false,
+      }}
+    >
       <Tabs.Screen
         name="home"
         options={{
