@@ -27,4 +27,5 @@ export const Colors = {
   },
   PRIMARY: '#7f57f1',
   GRAY: '#8F8F8F',
+  ICON_BG: '#CBC3E3',
 }

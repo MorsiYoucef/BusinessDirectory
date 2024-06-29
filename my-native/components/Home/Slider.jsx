@@ -13,7 +13,6 @@ const Slider = () => {
     const querySnaphot = await getDocs(q)
 
     querySnaphot.forEach((doc) => {
-      console.log(doc.data())
       setSliderList((prev) => [...prev, doc.data()])
     })
   }
