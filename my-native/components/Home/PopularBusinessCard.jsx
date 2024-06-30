@@ -12,6 +12,7 @@ const PopularBusinessCard = ({ business }) => {
         borderRadius: 15,
         marginTop: 10,
         display: 'flex',
+        gap: 5,
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -20,7 +21,7 @@ const PopularBusinessCard = ({ business }) => {
         style={{ width: 200, height: 130, borderRadius: 15 }}
         source={{ uri: business.imageUrl }}
       />
-      <View style={{ marginTop: 7 }}>
+      <View style={{ marginTop: 7, gap: 5 }}>
         <Text style={{ fontFamily: 'Outfit-Bold', fontSize: 17 }}>
           {business.name}
         </Text>
@@ -33,21 +34,42 @@ const PopularBusinessCard = ({ business }) => {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignContent: 'center',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            gap: 10,
           }}
         >
-          <Image
+          <View
             style={{
-              height: 20,
-              width: 20,
               display: 'flex',
+              flexDirection: 'row',
               alignContent: 'center',
+              alignItems: 'center',
+              gap: 10,
             }}
-            source={require('./../../assets/images/icons8-étoile-48.png')}
-          />
-          <Text style={{ fontFamily: 'Outfit-Bold', marginTop: 4 }}>4.5</Text>
+          >
+            <Image
+              style={{
+                height: 20,
+                width: 20,
+                display: 'flex',
+                alignContent: 'center',
+              }}
+              source={require('./../../assets/images/icons8-étoile-48.png')}
+            />
+            <Text style={{ fontFamily: 'Outfit-Bold', marginTop: 4 }}>4.5</Text>
+          </View>
+          <Text
+            style={{
+              fontFamily: 'Outfit',
+              backgroundColor: Colors.PRIMARY,
+              color: '#fff',
+              padding: 4,
+              fontSize: 12,
+              borderRadius: 5,
+            }}
+          >
+            {business.Category}
+          </Text>
         </View>
       </View>
     </View>

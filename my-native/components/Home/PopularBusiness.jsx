@@ -55,6 +55,7 @@ const PopularBusiness = () => {
       <FlatList
         data={businessList}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
         renderItem={({ item, index }) => (
           <PopularBusinessCard business={item} key={index} />
         )}
