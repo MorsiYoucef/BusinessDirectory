@@ -4,6 +4,7 @@ import { useLocalSearchParams } from 'expo-router'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../configs/FirebaseConfigs'
 import { Colors } from '../../constants/Colors'
+import Intro from './../../components/BusinessDetail/Intro'
 
 const BusinessDetail = () => {
   const { businessid } = useLocalSearchParams()
@@ -37,7 +38,7 @@ const BusinessDetail = () => {
         />
       ) : (
         <View>
-          <Text>{businessid}</Text>
+          <Intro business={businessDetail} />
         </View>
       )}
     </View>
