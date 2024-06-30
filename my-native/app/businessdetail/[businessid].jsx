@@ -40,7 +40,7 @@ const BusinessDetail = () => {
       ) : (
         <View>
           <Intro business={businessDetail} />
-          <ActionButton />
+          <ActionButton business={businessDetail} />
         </View>
       )}
     </View>
