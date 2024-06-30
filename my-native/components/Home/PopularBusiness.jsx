@@ -1,23 +1,24 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Colors } from '../../constants/Colors'
-import CategoryItem from './CategoryItem'
-import { collection, getDocs, query } from 'firebase/firestore'
+import { collection, getDocs, limit, query } from 'firebase/firestore'
 import { db } from '../../configs/FirebaseConfigs'
+import PopularBusinessCard from './PopularBusinessCard'
 
-const Category = () => {
-  const [categoryList, setCategoryList] = useState([])
+const PopularBusiness = () => {
+  const [businessList, setBusinessList] = useState([])
 
   useEffect(() => {
-    GetCategoryList()
+    GetBusinessList()
   }, [])
-  const GetCategoryList = async () => {
-    setCategoryList([]) // Clear previous data
-    const q = query(collection(db, 'Category'))
-    const querySnaphot = await getDocs(q)
 
-    querySnaphot.forEach((doc) => {
-      setCategoryList((prev) => [...prev, doc.data()])
+  const GetBusinessList = async () => {
+    setBusinessList([])
+    const q = query(collection(db, 'BusinessList'), limit(10))
+    const querySnapshot = await getDocs(q)
+
+    querySnapshot.forEach((doc) => {
+      setBusinessList((prev) => [...prev, doc.data()])
     })
   }
   return (
@@ -38,7 +39,7 @@ const Category = () => {
             fontFamily: 'Outfit-Bold',
           }}
         >
-          Category
+          Popular Business
         </Text>
         <Text
           style={{
@@ -50,22 +51,18 @@ const Category = () => {
           View All
         </Text>
       </View>
+
       <FlatList
-        data={categoryList}
-        showsHorizontalScrollIndicator={false}
+        data={businessList}
         horizontal={true}
         renderItem={({ item, index }) => (
-          <CategoryItem
-            Category={item}
-            key={index}
-            onCategoryPress={(category) => console.log(category)}
-          />
+          <PopularBusinessCard business={item} key={index} />
         )}
-      />
+      ></FlatList>
     </View>
   )
 }
 
-export default Category
+export default PopularBusiness
 
 const styles = StyleSheet.create({})
