@@ -30,7 +30,7 @@ const BusinessDetail = () => {
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
-      setBusinessDetail(docSnap.data())
+      setBusinessDetail({ id: docSnap.id, ...docSnap.data() })
       setLoading(false)
     } else {
       ;<Text>No Such Document!</Text>
@@ -38,7 +38,7 @@ const BusinessDetail = () => {
     }
   }
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <View>
       {loading ? (
         <ActivityIndicator
           size={'large'}
@@ -46,14 +46,14 @@ const BusinessDetail = () => {
           style={{ marginTop: '100%' }}
         />
       ) : (
-        <View>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Intro business={businessDetail} />
           <ActionButton business={businessDetail} />
-          <About business={businessDetail} />
           <Reviews business={businessDetail} />
-        </View>
+          <About business={businessDetail} />
+        </ScrollView>
       )}
-    </ScrollView>
+    </View>
   )
 }
 
