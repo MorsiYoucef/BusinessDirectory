@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  Share,
 } from 'react-native'
 import React from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -40,12 +41,19 @@ const ActionButton = ({ business }) => {
       id: 4,
       name: 'Share',
       icon: shareIcon,
-      url: 'tel:' + business?.contact,
+      url: business?.website,
     },
   ]
 
   const onPressHandle = (item) => {
-    if (item.name == 'share') {
+    if (item.name == 'Share') {
+      Share.share({
+        message:
+          business?.name +
+          '\n Address:' +
+          business.address +
+          '\n Find more details on Business Directory App by Me! ',
+      })
       return
     }
     Linking.openURL(item.url).catch((err) =>
