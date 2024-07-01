@@ -28,7 +28,7 @@ const Intro = ({ business }) => {
         source={{
           uri: business.imageUrl,
         }}
-        style={{ width: '100%', height: 240 }}
+        style={{ width: '100%', height: 300 }}
       />
       <View
         style={{
