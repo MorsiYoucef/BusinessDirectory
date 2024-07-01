@@ -1,5 +1,11 @@
-import { StyleSheet, Text, View, TextInput } from 'react-native'
-import React from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native'
+import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '../../constants/Colors'
 import Category from '../../components/Explore/Category'
@@ -8,15 +14,22 @@ import { db } from '../../configs/FirebaseConfigs'
 import ExploreBusinessList from '../../components/Explore/ExploreBusinessList'
 
 const explore = () => {
+  const [businessList, setBusinessList] = useState()
+  const [loading, setLoading] = useState(false)
   const GetBusinessByCategory = async (category) => {
+    setLoading(true)
     const q = query(
       collection(db, 'BusinessList'),
       where('Category', '==', category)
     )
     const querysnapShot = await getDocs(q)
+    const businesses = []
     querysnapShot.forEach((doc) => {
       console.log(doc.data())
+      businesses.push({ id: doc.id, ...doc.data() })
     })
+    setBusinessList(businesses)
+    setLoading(false)
   }
 
   return (
@@ -54,7 +67,15 @@ const explore = () => {
       />
 
       {/* business list */}
-      <ExploreBusinessList businessList={businesslist} />
+      {loading ? (
+        <ActivityIndicator
+          size={'large'}
+          color={Colors.PRIMARY}
+          style={{ marginTop: '50%' }}
+        />
+      ) : (
+        <ExploreBusinessList businessList={businessList} />
+      )}
     </View>
   )
 }

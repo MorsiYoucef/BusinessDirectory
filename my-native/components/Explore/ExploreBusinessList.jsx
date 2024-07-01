@@ -1,18 +1,17 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import BusinessListCard from './BusinessListCard'
 
 const ExploreBusinessList = ({ businessList }) => {
   return (
-    <View>
+    <ScrollView>
       <FlatList
         data={businessList}
         renderItem={({ item, index }) => (
-          <View key={index}>
-            <Text>{item.name}</Text>
-          </View>
+          <BusinessListCard key={index} business={item} />
         )}
       />
-    </View>
+    </ScrollView>
   )
 }
 
