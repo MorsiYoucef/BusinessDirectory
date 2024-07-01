@@ -13,6 +13,7 @@ import { Colors } from '../../constants/Colors'
 import Intro from './../../components/BusinessDetail/Intro'
 import ActionButton from '../../components/BusinessDetail/ActionButton'
 import About from '../../components/BusinessDetail/About'
+import Reviews from '../../components/BusinessDetail/Reviews'
 
 const BusinessDetail = () => {
   const { businessid } = useLocalSearchParams()
@@ -37,7 +38,7 @@ const BusinessDetail = () => {
     }
   }
   return (
-    <ScrollView>
+    <View>
       {loading ? (
         <ActivityIndicator
           size={'large'}
@@ -49,9 +50,10 @@ const BusinessDetail = () => {
           <Intro business={businessDetail} />
           <ActionButton business={businessDetail} />
           <About business={businessDetail} />
+          <Reviews business={businessDetail} />
         </View>
       )}
-    </ScrollView>
+    </View>
   )
 }
 
