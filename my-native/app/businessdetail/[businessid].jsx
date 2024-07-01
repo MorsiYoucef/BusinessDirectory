@@ -38,7 +38,7 @@ const BusinessDetail = () => {
     }
   }
   return (
-    <View>
+    <ScrollView showsVerticalScrollIndicator={false}>
       {loading ? (
         <ActivityIndicator
           size={'large'}
@@ -53,7 +53,7 @@ const BusinessDetail = () => {
           <Reviews business={businessDetail} />
         </View>
       )}
-    </View>
+    </ScrollView>
   )
 }
 

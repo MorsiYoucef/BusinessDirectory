@@ -78,7 +78,6 @@ const ActionButton = ({ business }) => {
             >
               <Image source={item?.icon} style={{ width: 30, height: 30 }} />
               <Text style={{ fontFamily: 'Outfit-Med' }}>{item.name}</Text>
-              <Text></Text>
             </TouchableOpacity>
           )}
         />

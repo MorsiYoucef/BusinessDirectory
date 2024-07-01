@@ -11,9 +11,21 @@ const About = ({ business }) => {
         height: '100%',
       }}
     >
-      <Text style={{ fontFamily: 'Outfit-Bold', fontSize: 20 }}>About</Text>
-      <Text style={{ fontFamily: 'Outfit', lineHeight: 25 }}>
-        {business.about}
+      <Text
+        style={{
+          fontFamily: 'Outfit-Bold',
+          fontSize: 20,
+        }}
+      >
+        About
+      </Text>
+      <Text
+        style={{
+          fontFamily: 'Outfit',
+          lineHeight: 25,
+        }}
+      >
+        {business?.about}
       </Text>
     </View>
   )
