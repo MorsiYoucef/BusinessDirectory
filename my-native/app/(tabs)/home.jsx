@@ -9,7 +9,7 @@ const home = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* Header */}
       <Header />
-
+//youcef morsi ma kayen walo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       {/* Slider */}
       <Slider />
 
