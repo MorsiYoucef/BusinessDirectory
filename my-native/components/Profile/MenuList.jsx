@@ -11,7 +11,6 @@ import { useRouter } from 'expo-router'
 import { Colors } from './../../constants/Colors'
 
 const MenuList = () => {
-  const router = useRouter()
   const menuList = [
     {
       id: 1,
@@ -38,6 +37,11 @@ const MenuList = () => {
       path: '/business/add-business',
     },
   ]
+
+  const router = useRouter()
+  const onMenuClick = (item) => {
+    router.push(item.path)
+  }
   return (
     <View style={{ marginTop: 50 }}>
       <FlatList
@@ -46,7 +50,7 @@ const MenuList = () => {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             key={index}
-            onPress={() => router.push(item.path)}
+            onPress={() => onMenuClick(item)}
             style={{
               display: 'flex',
               flexDirection: 'row',
