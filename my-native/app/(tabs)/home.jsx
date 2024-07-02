@@ -10,11 +10,7 @@ const home = () => {
       {/* Header */}
       <Header />
 //youcef morsi ma kayen walo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      {/* Slider */}
-      <Slider />
 
-      {/* Category */}
-      <Category />
 
       {/* Popoular Business List */}
       <PopularBusiness />
