@@ -1,32 +1,41 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import React from 'react'
+import { useRouter } from 'expo-router'
 import { Colors } from './../../constants/Colors'
 
 const MenuList = () => {
+  const router = useRouter()
   const menuList = [
     {
       id: 1,
       name: 'Add Business',
       icon: require('./../../assets/images/add.png'),
-      path: '',
+      path: '/business/add-business',
     },
     {
       id: 2,
       name: 'My Business',
       icon: require('./../../assets/images/business-and-trade.png'),
-      path: '',
+      path: '/business/add-business',
     },
     {
       id: 3,
       name: 'Share App',
       icon: require('./../../assets/images/share_1.png'),
-      path: '',
+      path: '/business/add-business',
     },
     {
       id: 4,
       name: 'Logout',
       icon: require('./../../assets/images/logout.png'),
-      path: '',
+      path: '/business/add-business',
     },
   ]
   return (
@@ -35,8 +44,9 @@ const MenuList = () => {
         data={menuList}
         numColumns={2}
         renderItem={({ item, index }) => (
-          <View
+          <TouchableOpacity
             key={index}
+            onPress={() => router.push(item.path)}
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -55,7 +65,7 @@ const MenuList = () => {
               {' '}
               {item.name}
             </Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
       <Text
