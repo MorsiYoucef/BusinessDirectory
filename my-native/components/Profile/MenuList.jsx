@@ -1,6 +1,7 @@
 import {
   FlatList,
   Image,
+  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,8 +10,10 @@ import {
 import React from 'react'
 import { useRouter } from 'expo-router'
 import { Colors } from './../../constants/Colors'
+import { useAuth } from '@clerk/clerk-expo'
 
 const MenuList = () => {
+  const { signOut } = useAuth()
   const menuList = [
     {
       id: 1,
@@ -28,18 +31,29 @@ const MenuList = () => {
       id: 3,
       name: 'Share App',
       icon: require('./../../assets/images/share_1.png'),
-      path: '/business/add-business',
+      path: 'share',
     },
     {
       id: 4,
       name: 'Logout',
       icon: require('./../../assets/images/logout.png'),
-      path: '/business/add-business',
+      path: 'logout',
     },
   ]
 
   const router = useRouter()
   const onMenuClick = (item) => {
+    if (item.name === 'Logout') {
+      signOut()
+      return
+    }
+    if (item.name === 'Share App') {
+      Share.share({
+        message:
+          'Download the Business App Developped By @Yusuf, Download URL:',
+      })
+      return
+    }
     router.push(item.path)
   }
   return (

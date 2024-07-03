@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useRouter } from 'expo-router'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 const Intro = ({ business }) => {
   const router = useRouter()
@@ -30,6 +31,7 @@ const Intro = ({ business }) => {
         }}
         style={{ width: '100%', height: 300 }}
       />
+
       <View
         style={{
           padding: 20,
@@ -37,14 +39,24 @@ const Intro = ({ business }) => {
           backgroundColor: '#fff',
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
-        <Text style={{ fontSize: 20, fontFamily: 'Outfit-Bold' }}>
-          {business.name}
-        </Text>
-        <Text style={{ fontFamily: 'Outfit', fontSize: 18 }}>
-          {business.address}
-        </Text>
+        <View>
+          <Text style={{ fontSize: 20, fontFamily: 'Outfit-Bold' }}>
+            {business.name}
+          </Text>
+          <Text style={{ fontFamily: 'Outfit', fontSize: 18 }}>
+            {business.address}
+          </Text>
+        </View>
+
+        <View>
+          <MaterialIcons name="delete" size={30} color="red" />
+        </View>
       </View>
     </View>
   )

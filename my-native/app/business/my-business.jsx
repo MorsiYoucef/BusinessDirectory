@@ -3,8 +3,10 @@ import React from 'react'
 
 const MyBusiness = () => {
   return (
-    <View>
-      <Text>MyBusiness</Text>
+    <View style={{ padding: 20 }}>
+      <Text style={{ fontFamily: 'Outfit-Bold', fontSize: 30 }}>
+        MyBusiness
+      </Text>
     </View>
   )
 }
