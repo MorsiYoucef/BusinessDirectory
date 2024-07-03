@@ -1,8 +1,10 @@
 import {
+  ActivityIndicator,
   Image,
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native'
@@ -12,33 +14,62 @@ import { Colors } from '../../constants/Colors'
 import * as ImagePicker from 'expo-image-picker'
 import RNPickerSelect from 'react-native-picker-select'
 import { db, storage } from './../../configs/FirebaseConfigs'
-import { getDocs, query, collection } from 'firebase/firestore'
-import { ref, uploadBytes } from 'firebase/storage'
+import { getDocs, query, collection, doc, setDoc } from 'firebase/firestore'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { useUser } from '@clerk/clerk-expo'
 
 const AddBusiness = () => {
   const navigation = useNavigation()
   const [image, setImage] = useState(null)
   const [categoryList, setCategoryList] = useState([])
-
-  const [name, setName] = useState()
-  const [address, setAddress] = useState()
-  const [contact, setContact] = useState()
-  const [website, setWebsite] = useState()
-  const [about, setAbout] = useState()
-  const [category, setCategory] = useState()
+  const [name, setName] = useState('')
+  const [address, setAddress] = useState('')
+  const [contact, setContact] = useState('')
+  const [website, setWebsite] = useState('')
+  const [about, setAbout] = useState('')
+  const [category, setCategory] = useState('')
+  const { user } = useUser()
+  const [loading, setLoading] = useState(false)
 
   const onAddNewBusiness = async () => {
+    setLoading(true)
     const fileName = Date.now().toString() + '.jpg'
     const resp = await fetch(image)
     const blob = await resp.blob()
 
     const imageRef = ref(storage, 'business-app/' + fileName)
 
+    uploadBytes(imageRef, blob)
+      .then((snapshot) => {
+        console.log('File Uploaded...')
+      })
+      .then((resp) => {
+        getDownloadURL(imageRef).then(async (downloadUrl) => {
+          console.log(downloadUrl)
+          saveBusinessDetail(downloadUrl)
+        })
+      })
+
+    setLoading(false)
+  }
+
+  const saveBusinessDetail = async (imageUrl) => {
     try {
-      await uploadBytes(imageRef, blob)
-      console.log('File Uploaded...')
+      await setDoc(doc(db, 'BusinessList', Date.now().toString()), {
+        name: name,
+        address: address,
+        contact: contact,
+        website: website,
+        about: about,
+        category: category,
+        username: user?.fullName,
+        userEmail: user?.emailAddresses,
+        userImage: user?.imageUrl,
+        imageUrl: imageUrl,
+      })
+      ToastAndroid.show('New Business Added...', ToastAndroid.BOTTOM)
     } catch (error) {
-      console.error('Error uploading file:', error)
+      console.error('Error saving business details: ', error)
     }
   }
   useEffect(() => {
@@ -50,6 +81,7 @@ const AddBusiness = () => {
   }, [])
 
   const GetCategoryList = async () => {
+    setCategoryList([])
     const q = query(collection(db, 'Category'))
     const snapShot = await getDocs(q)
 
@@ -95,13 +127,13 @@ const AddBusiness = () => {
       ) : (
         <Image
           source={{ uri: image }}
-          style={{ width: 350, height: 200, borderRadius: 20 }}
+          style={{ width: 100, height: 100, borderRadius: 20 }}
         />
       )}
       <View>
         <TextInput
           placeholder="Name"
-          onChange={(v) => setName(v)}
+          onChangeText={(text) => setName(text)}
           style={{
             padding: 10,
             borderWidth: 1,
@@ -115,7 +147,7 @@ const AddBusiness = () => {
         ></TextInput>
         <TextInput
           placeholder="Address"
-          onChange={(v) => setAddress(v)}
+          onChangeText={(text) => setAddress(text)}
           style={{
             padding: 10,
             borderWidth: 1,
@@ -129,7 +161,7 @@ const AddBusiness = () => {
         ></TextInput>
         <TextInput
           placeholder="contact"
-          onChange={(v) => setContact(v)}
+          onChangeText={(text) => setContact(text)}
           style={{
             padding: 10,
             borderWidth: 1,
@@ -143,7 +175,7 @@ const AddBusiness = () => {
         ></TextInput>
         <TextInput
           placeholder="Website"
-          onChange={(v) => setWebsite(v)}
+          onChangeText={(text) => setWebsite(text)}
           style={{
             padding: 10,
             borderWidth: 1,
@@ -157,7 +189,7 @@ const AddBusiness = () => {
         ></TextInput>
         <TextInput
           multiline
-          onChange={(v) => setAbout(v)}
+          onChangeText={(text) => setAbout(text)}
           numberOfLines={5}
           placeholder="about"
           te
@@ -180,6 +212,7 @@ const AddBusiness = () => {
         />
       </View>
       <TouchableOpacity
+        disabled={loading}
         style={{
           padding: 10,
           backgroundColor: Colors.PRIMARY,
@@ -188,11 +221,15 @@ const AddBusiness = () => {
         }}
         onPress={() => onAddNewBusiness()}
       >
-        <Text
-          style={{ textAlign: 'center', fontFamily: 'Outfit', color: '#fff' }}
-        >
-          Add New Business
-        </Text>
+        {loading ? (
+          <ActivityIndicator size={'large'} color={'#fff'} />
+        ) : (
+          <Text
+            style={{ textAlign: 'center', fontFamily: 'Outfit', color: '#fff' }}
+          >
+            Add New Business
+          </Text>
+        )}
       </TouchableOpacity>
     </View>
   )
